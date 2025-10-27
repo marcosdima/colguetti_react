@@ -1,6 +1,7 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
+import { getItem, saveItem } from "../utils/storage";
+import { useConfig } from "../hooks/use-config";
 
 type InputProps = {
   value: string;
@@ -29,26 +30,22 @@ function InputComponent({ value, setValue, onSave, label, placeholder }: InputPr
 }
 
 export default function Config() {
-  const [alias, setAlias] = useState('');
-
-  // Check if there is a saved alias.
+  const { config: { alias } , setAlias } = useConfig();
+  const [auxAlias, setAuxAlias] = useState(alias);
+  
   useEffect(() => {
-    const asyncCall = async () => {
-      const savedAlias = await AsyncStorage.getItem('alias');
-      if (savedAlias) setAlias(savedAlias)
-    }
-    asyncCall()
-  }, [])
+    if (alias) setAuxAlias(alias)
+  }, [alias]);
 
   const onUpdate = async () => {
-    await AsyncStorage.setItem('alias', alias);
+    await setAlias(auxAlias);
   }
 
   return (
     <View style={styles.contenedor}>
       <InputComponent
-        value={alias}
-        setValue={setAlias}
+        value={auxAlias}
+        setValue={setAuxAlias}
         onSave={onUpdate}
         label="Alias"
         placeholder="Type your alias"
