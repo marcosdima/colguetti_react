@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './screens/Home';
-import Config from './screens/Config';
+import Home from './components/screens/Home';
+import Config from './components/screens/Config';
 import { RootStackParamList } from './types';
 import { useConfig } from './hooks/use-config';
 import { ConfigContext } from './contexts/config-context';

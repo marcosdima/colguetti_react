@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
-import { getItem, saveItem } from "../utils/storage";
-import { useConfig } from "../hooks/use-config";
+import { useConfig } from "../../hooks/use-config";
 
 type InputProps = {
   value: string;
