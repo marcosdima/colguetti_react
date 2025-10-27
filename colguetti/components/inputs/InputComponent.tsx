@@ -40,9 +40,7 @@ export default (
 }
 
 const styles = StyleSheet.create({
-  contenedor: {
-    padding: 8,
-  },
+  contenedor: {},
   input: {
     display: 'flex',
     flexDirection: 'row',
