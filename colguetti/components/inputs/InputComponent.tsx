@@ -1,4 +1,7 @@
-import { View, Text, TextInput, StyleSheet, Button } from "react-native";
+import { View, Text, TextInput, StyleSheet, } from "react-native";
+import Button from "./Button";
+import { useConfig } from "../../hooks/use-config";
+import { translations } from "../../utils/i18";
 
 type InputProps = {
   value: string;
@@ -19,6 +22,9 @@ export default (
     disableButton,
   }: InputProps
 ) => {
+  const { config: { language } } = useConfig();
+  const texts = translations[language];
+
   return (
     <View style={styles.contenedor}>
       <Text>{label}</Text>
@@ -29,26 +35,33 @@ export default (
           placeholder={placeholder}
           style={styles.inputText}
         />
-        <Button
-          title="save"
-          onPress={onSave}
-          disabled={disableButton}
-        />
+        <View style={styles.buttonWrapper}>
+          <Button
+            onPress={onSave}
+            disabled={disableButton}
+            text={texts.actions.save}
+          />
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  contenedor: {},
+  contenedor: {
+    width: '100%',
+  },
   input: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   inputText: {
     borderWidth: 1,
     padding: 8,
     width: '70%',
   },
+  buttonWrapper: {
+    width: '30%',
+    paddingLeft: 10,
+  }
 });
