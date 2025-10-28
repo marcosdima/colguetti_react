@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { useConfig } from "../../hooks/use-config";
+import { useConfig } from '../../contexts/config-context'
 import InputComponent from "../inputs/InputComponent";
 import LanguagePanel from "../inputs/LanguagePanel";
 import { translations } from "../../utils/i18";
