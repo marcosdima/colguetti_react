@@ -2,7 +2,7 @@ export type Alarm = {
   id: string;
   title: string;
   duration: number;
-  icon: string;
+  icons: string[];
 };
 
 export type ActiveAlarm = {

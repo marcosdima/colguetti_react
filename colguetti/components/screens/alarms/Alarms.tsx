@@ -1,13 +1,15 @@
 import { View, FlatList, StyleSheet } from "react-native";
-import Title from "../../../components/base/Title";
 import Text from "../../../components/base/Text";
 import Button from "../../../components/inputs/Button";
 import { useAlarms } from "../../../contexts/alarms-context";
 import { AlarmStackParamList } from "../../../types/root-stack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
+import AlarmDisplay from "./AlarmDisplay";
+
 
 type AlarmsScreenNavigationProp = NativeStackNavigationProp<AlarmStackParamList, 'Alarms'>;
+
 
 export default () => {
   const { navigate } = useNavigation<AlarmsScreenNavigationProp>();
@@ -25,12 +27,7 @@ export default () => {
       <FlatList
         data={alarms}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Text>{item.title}</Text>
-            <Text>Duración: {item.duration} min</Text>
-          </View>
-        )}
+        renderItem={({ item }) => <AlarmDisplay item={item}/>}
         style={styles.list}
       />
 
