@@ -1,9 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { View, Button } from "react-native";
-import { RootStackParamList } from "../../types";
+import { RootStackParamList } from "../../types/root-stack";
 import { useConfig } from "../../contexts/config-context";
-import Text from "../base/Text";
+import Title from "../base/Title";
+import SubTitle from "../base/SubTitle";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -13,13 +14,15 @@ export default function Home() {
   
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Main Screen</Text>
+      <Title>Main Screen</Title>
       <Button title="Go to config" onPress={() => navigation.navigate('Configuration')} />
-      {
-        config?.alias
-          ? <Text>Hi {config.alias}!</Text>
-          : <Text>Hi there!</Text>
-      }
+      <SubTitle>
+        {
+          config?.alias
+            ? `Hi ${config.alias}!`
+            : 'Hi there!'
+        }
+      </SubTitle>
     </View>
   );
 }
