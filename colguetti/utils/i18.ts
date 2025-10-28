@@ -12,8 +12,31 @@ export const translations = {
     },
     alarms: {
       title: 'Alarms',
+      button: 'Create alarm',
+      active: {
+        exists: 'Active alarm',
+        dontExists: 'There are no active alarms',
+      },
+      alarm: {
+        duration: 'Duration',
+        list: 'List',
+      },
       create: {
-        title: 'Create alarm'
+        title: 'Create alarm',
+        fields: {
+          title: {
+            label: 'Title',
+            placeholder: 'Ex: Coffee alarm',
+          },
+          duration: {
+            label: 'Duration (minutes)',
+            placeholder: 'Ex: 5',
+          },
+          list: {
+            label: 'Items list',
+            placeholder: 'Ex: Keys',
+          },
+        },
       }
     },
     actions: {
@@ -33,9 +56,32 @@ export const translations = {
     },
     alarms: {
       title: 'Alarmas',
+      button: 'Agregar alarma',
+      active: {
+        exists: 'Alarma activa',
+        dontExists: 'No hay alarmas activas',
+      },
+      alarm: {
+        duration: 'Duración',
+        list: 'Lista',
+      },
       create: {
-        title: 'Crear alarma'
-      }
+        title: 'Crear alarma',
+        fields: {
+          title: {
+            label: 'Título',
+            placeholder: 'Ej: Alarma para el café',
+          },
+          duration: {
+            label: 'Duración (minutos)',
+            placeholder: 'Ej: 5',
+          },
+          list: {
+            label: 'Lista',
+            placeholder: 'Ej: Llaves',
+          },
+        },
+      },
     },
     actions: {
       save: 'Guardar',

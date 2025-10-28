@@ -20,7 +20,7 @@ const AlarmContext = createContext<AlarmContextType | undefined>(undefined);
 export const AlarmProvider = ({ children }: { children: ReactNode }) => {
   const [alarms, setAlarms] = useState<Alarm[]>([]);
   const [activeAlarm, setActiveAlarm] = useState<ActiveAlarm | null>(null);
-
+  
   useEffect(() => {
     (async () => {
       const savedAlarms = await getItem(alarmsKey);
@@ -49,7 +49,7 @@ export const AlarmProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const activateAlarm = async (id: string) => {
-    const active = { alarmId: id, startedAt: Date.now(), icons: [] };
+    const active = { alarmId: id, startedAt: Date.now(), list: [] };
     setActiveAlarm(active);
     await saveItem(activeAlarmKey, JSON.stringify(active));
   };

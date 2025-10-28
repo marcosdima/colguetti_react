@@ -6,6 +6,8 @@ import { AlarmStackParamList } from "../../../types/root-stack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import AlarmDisplay from "./AlarmDisplay";
+import { translations } from "../../../utils/i18";
+import { useConfig } from "../../../contexts/config-context";
 
 
 type AlarmsScreenNavigationProp = NativeStackNavigationProp<AlarmStackParamList, 'Alarms'>;
@@ -14,14 +16,17 @@ type AlarmsScreenNavigationProp = NativeStackNavigationProp<AlarmStackParamList,
 export default () => {
   const { navigate } = useNavigation<AlarmsScreenNavigationProp>();
   const { alarms, activeAlarm } = useAlarms();
-  const alarm = alarms.find((al) => al.id === activeAlarm?.alarmId);
+  const { config: { language } } = useConfig();
+  const texts = translations[language]
 
+  const alarm = alarms.find((al) => al.id === activeAlarm?.alarmId);
+  
   return (
     <View style={styles.container}>
       {
         alarm
-        ? <Text>Alarma activa: {alarm.title}</Text>
-        : <Text>No hay alarmas activas</Text>
+        ? <Text>{texts.alarms.active.exists}: {alarm.title}</Text>
+        : <Text>{texts.alarms.active.dontExists}</Text>
       }
 
       <FlatList
@@ -31,7 +36,7 @@ export default () => {
         style={styles.list}
       />
 
-      <Button text="Agregar alarma" onPress={() => navigate('Create')} />
+      <Button text={texts.alarms.button} onPress={() => navigate('Create')} />
     </View>
   );
 };
