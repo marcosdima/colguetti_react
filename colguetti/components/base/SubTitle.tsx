@@ -11,7 +11,7 @@ export default ({ style, ...props }: TextProps) => {
     <Text
       style={[
         {
-          color: theme.text,
+          color: theme.text.primary,
           fontSize: 18,
           opacity: 0.8,
           marginBottom: 6,

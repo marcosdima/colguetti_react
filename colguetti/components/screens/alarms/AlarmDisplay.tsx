@@ -10,7 +10,7 @@ type AlarmDisplayProps = {
 export default ({item}: AlarmDisplayProps) => {
   const { theme } = useTheme();
   return (
-    <View style={[styles.item, { borderColor: theme.text }]}>
+    <View style={[styles.item, { borderColor: theme.text.primary }]}>
       <Text>{item.title}</Text>
       <Text>Duración: {item.duration} min</Text>
       <Text>Lista: {item.icons.join(', ')}.</Text>

@@ -4,18 +4,18 @@ import { ComponentProps } from "react";
 
 type ThemedTextInputProps = ComponentProps<typeof TextInput>;
 
-export default ({ style, ...props}: ThemedTextInputProps) => {
+export default ({ style, ...props }: ThemedTextInputProps) => {
   const { theme } = useTheme();
   
   const inputStyle = {
     borderWidth: 1,
     padding: 8,
     borderRadius: 5,
-    borderColor: theme.text,
-    color: theme.text,
+    borderColor: theme.text.primary,
+    color: theme.text.primary,
   }
-
+  
   return (
-    <TextInput style={[inputStyle, style]} { ...props }/>
+    <TextInput style={[inputStyle, style]} placeholderTextColor={theme.text.secondary} { ...props }/>
   )
 }

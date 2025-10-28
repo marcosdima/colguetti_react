@@ -9,7 +9,7 @@ export default ({ style, ...props }: TextProps) => {
     <Text
       style={[
         {
-          color: theme.text,
+          color: theme.text.primary,
           fontSize: 24,
           fontWeight: 'bold',
           marginBottom: 8
