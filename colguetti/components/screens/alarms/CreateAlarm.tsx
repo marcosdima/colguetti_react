@@ -75,7 +75,11 @@ export default () => {
           <Chips items={items} onRemove={removeItem}/>
         </View>
       </View>
-      <Button text={texts.actions.save} onPress={handleAdd} />
+      <Button
+        text={texts.actions.save}
+        onPress={handleAdd}
+        disabled={!title || !duration}
+      />
     </View>
   );
 };
