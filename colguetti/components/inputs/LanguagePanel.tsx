@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useConfig } from '../../hooks/use-config';
+import { useConfigContext } from '../../contexts/config-context';
 
 const LanguageSelector = () => {
-  const { config: { language }, saveLanguage } = useConfig();
+  const { config: { language }, saveLanguage } = useConfigContext();
 
   return (
     <View style={styles.container}>

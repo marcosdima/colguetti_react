@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getItem, saveItem } from '../utils/storage';
-import { ConfigContext } from '../contexts/config-context';
 
 type Config = {
   alias: string;
@@ -16,9 +15,6 @@ export type UseConfigType = {
 }
 
 export const useConfig = () => {
-  const context = useContext(ConfigContext);
-  if (context) return context;
-
   const [config, setConfig] = useState<Config>({
     alias: '',
     language: 'en',

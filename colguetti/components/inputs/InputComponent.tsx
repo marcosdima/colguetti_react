@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet, } from "react-native";
 import Button from "./Button";
-import { useConfig } from "../../hooks/use-config";
 import { translations } from "../../utils/i18";
+import { useConfigContext } from "../../contexts/config-context";
 
 type InputProps = {
   value: string;
@@ -22,7 +22,7 @@ export default (
     disableButton,
   }: InputProps
 ) => {
-  const { config: { language } } = useConfig();
+  const { config: { language } } = useConfigContext();
   const texts = translations[language];
 
   return (
