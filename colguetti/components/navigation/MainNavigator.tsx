@@ -1,22 +1,19 @@
-import Home from './Home';
-import Config from './Config';
-import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import Home from '../screens/Home';
+import Config from '../screens/Config';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useConfig } from '../../contexts/config-context';
 import { translations } from '../../utils/i18';
-import { useTheme } from '../../contexts/theme-context';
+import NavigationContainer from './NavigationContainer';
+import AlarmsNavigator from './AlarmsNavigator';
 
 const Stack = createNativeStackNavigator();
 
 export default () => {
   const configHook = useConfig();
   const texts = translations[configHook.config.language];
-  const { themeName } = useTheme();
-
-  const navigationTheme = themeName === 'dark' ? DarkTheme : DefaultTheme;
 
   return (
-    <NavigationContainer theme={navigationTheme}>
+    <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
@@ -27,6 +24,14 @@ export default () => {
           name="Configuration"
           component={Config}
           options={{ title: texts.config.title }}
+        />
+        <Stack.Screen
+          name="AlarmsNavigator"
+          component={AlarmsNavigator}
+          options={{
+            title: texts.config.title,
+            headerShown: false,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

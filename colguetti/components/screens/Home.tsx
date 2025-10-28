@@ -23,7 +23,10 @@ export default function Home() {
             : 'Hi there!'
         }
       </SubTitle>
-      <Button text="Go to config" onPress={() => navigation.navigate('Configuration')} />
+      <View style={styles.buttons}>
+        <Button text="Go to config" onPress={() => navigation.navigate('Configuration')} />
+        <Button text="Go to alarms" onPress={() => navigation.navigate('AlarmsNavigator')} />
+      </View>
     </View>
   );
 }
@@ -35,4 +38,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 40,
   },
+  buttons: {
+    flex: 1,
+    gap: 10,
+    paddingTop: 20,
+  }
 });

@@ -10,6 +10,12 @@ export const translations = {
         placeholder: 'Type your alias',
       }
     },
+    alarms: {
+      title: 'Alarms',
+      create: {
+        title: 'Create alarm'
+      }
+    },
     actions: {
       save: 'Save',
     },
@@ -23,6 +29,12 @@ export const translations = {
       alias: {
         label: 'Alias',
         placeholder: 'Ingresa tu alias',
+      }
+    },
+    alarms: {
+      title: 'Alarmas',
+      create: {
+        title: 'Crear alarma'
       }
     },
     actions: {
