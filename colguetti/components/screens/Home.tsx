@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { View, Text, Button } from "react-native";
+import { View, Button } from "react-native";
 import { RootStackParamList } from "../../types";
 import { useConfig } from "../../hooks/use-config";
+import Text from "../base/Text";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 

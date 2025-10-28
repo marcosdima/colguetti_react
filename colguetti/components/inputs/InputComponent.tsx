@@ -1,7 +1,9 @@
-import { View, Text, TextInput, StyleSheet, } from "react-native";
+import { View, StyleSheet, } from "react-native";
 import Button from "./Button";
 import { translations } from "../../utils/i18";
 import { useConfigContext } from "../../contexts/config-context";
+import TextInput from "./TextInput";
+import Text from "../base/Text";
 
 type InputProps = {
   value: string;
@@ -56,8 +58,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   inputText: {
-    borderWidth: 1,
-    padding: 8,
     width: '70%',
   },
   buttonWrapper: {

@@ -4,6 +4,7 @@ import { useConfig } from "../../hooks/use-config";
 import InputComponent from "../inputs/InputComponent";
 import LanguagePanel from "../inputs/LanguagePanel";
 import { translations } from "../../utils/i18";
+import ThemeChanger from "../inputs/ThemeChanger";
 
 export default () => {
   const { config: { alias, language } , saveAlias } = useConfig();
@@ -21,6 +22,7 @@ export default () => {
   return (
     <View style={styles.contenedor}>
       <LanguagePanel/>
+      <ThemeChanger/>
       <InputComponent
         value={auxAlias}
         setValue={setAuxAlias}
