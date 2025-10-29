@@ -33,11 +33,12 @@ export default ({ item }: AlarmDisplayProps) => {
   }
 
   const onEdit = () => {
-    navigate('Create', { alarmId: item.id })
+    navigate('Create', { alarmId: item.id });
   };
 
   const onActive = (alarmId: string) => {
-    activateAlarm(alarmId)
+    activateAlarm(alarmId);
+    navigate('Active');
   }
 
   const onDelete = (alarmId: string) => {

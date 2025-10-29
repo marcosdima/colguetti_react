@@ -8,5 +8,5 @@ export type Alarm = {
 export type ActiveAlarm = {
   alarmId: string;
   startedAt: number;
-  list: string[];
+  selectedItems: string[];
 };

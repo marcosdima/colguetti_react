@@ -13,6 +13,7 @@ type AlarmContextType = {
   updateAlarm: (alarm: Alarm) => Promise<void>;
   activateAlarm: (id: string) => Promise<void>;
   stopAlarm: () => Promise<void>;
+  updateSelectedItems: (item: string) => Promise<void>;
 };
 
 const AlarmContext = createContext<AlarmContextType | undefined>(undefined);
@@ -49,7 +50,7 @@ export const AlarmProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const activateAlarm = async (id: string) => {
-    const active = { alarmId: id, startedAt: Date.now(), list: [] };
+    const active = { alarmId: id, startedAt: Date.now(), selectedItems: [] };
     setActiveAlarm(active);
     await saveItem(activeAlarmKey, JSON.stringify(active));
   };
@@ -57,6 +58,15 @@ export const AlarmProvider = ({ children }: { children: ReactNode }) => {
   const stopAlarm = async () => {
     setActiveAlarm(null);
     await saveItem(activeAlarmKey, '');
+  };
+
+  const updateSelectedItems = async (item: string) => {
+    if (!activeAlarm) return;
+    const curr = activeAlarm.selectedItems;
+    let update = curr.includes(item)
+      ? curr.filter((currItem) => currItem !== item)
+      : curr.concat(item)
+    setActiveAlarm({ ...activeAlarm, selectedItems: update })
   };
 
   return (
@@ -69,6 +79,7 @@ export const AlarmProvider = ({ children }: { children: ReactNode }) => {
         updateAlarm,
         activateAlarm,
         stopAlarm,
+        updateSelectedItems,
       }}
     >
       {children}
