@@ -28,7 +28,7 @@ export default () => {
   const alarm = alarms.find((item) => item.id === alarmId);
 
   const [title, setTitle] = useState(alarm?.title ?? '');
-  const [duration, setDuration] = useState(String(alarm?.duration) ?? '');
+  const [duration, setDuration] = useState(alarm ? String(alarm.duration) : '');
   const [item, setItem] = useState('');
   const [items, setItems] = useState<string[]>(alarm?.list ?? []);
 
