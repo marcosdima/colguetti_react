@@ -37,6 +37,9 @@ export const translations = {
             placeholder: 'Ex: Keys',
           },
         },
+      },
+      edit: {
+        title: 'Edit alarm',
       }
     },
     actions: {
@@ -82,6 +85,9 @@ export const translations = {
           },
         },
       },
+      edit: {
+        title: 'Editar alarma',
+      }
     },
     actions: {
       save: 'Guardar',

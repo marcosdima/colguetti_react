@@ -1,13 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { View, StyleSheet } from "react-native";
-import { RootStackParamList } from "../../types/root-stack";
+import { HomeScreenNavigationProp } from "../../types/root-stack";
 import { useConfig } from "../../contexts/config-context";
 import Title from "../base/Title";
 import SubTitle from "../base/SubTitle";
 import Button from "../inputs/Button";
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+
 
 export default function Home() {
   const navigation = useNavigation<HomeScreenNavigationProp>();

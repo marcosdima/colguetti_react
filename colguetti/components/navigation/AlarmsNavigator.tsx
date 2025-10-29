@@ -22,7 +22,13 @@ export default () => {
         <Stack.Screen
           name="Create"
           component={CreateAlarm}
-          options={{ title: texts.alarms.create.title }}
+          options={
+            ({ route }: { route: { params?: { alarmId?: string } } }) => ({
+              title: route.params?.alarmId
+                ? texts.alarms.edit.title
+                : texts.alarms.create.title
+            })
+          }
         />
       </Stack.Navigator>
     </AlarmProvider>

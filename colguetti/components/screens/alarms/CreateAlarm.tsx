@@ -8,18 +8,29 @@ import TextInput from '../../inputs/TextInput';
 import { useConfig } from '../../../contexts/config-context';
 import { translations } from '../../../utils/i18';
 import Chips from '../../inputs/Chips';
+import { useRoute } from '@react-navigation/native';
+import { CreateRouteProp } from '../../../types/root-stack';
+
+
 
 export default () => {
   const { theme } = useTheme();
-  const { addAlarm } = useAlarms();
+  const { updateAlarm, addAlarm, alarms } = useAlarms();
   const { config: { language } } = useConfig();
+  
+  const route = useRoute<CreateRouteProp>();
+  const { alarmId } = route.params || {};
+
   const texts = translations[language]
   const fields = texts.alarms.create.fields
 
-  const [title, setTitle] = useState('');
-  const [duration, setDuration] = useState('');
+  // If alarm exists, then it's in edit mode.
+  const alarm = alarms.find((item) => item.id === alarmId);
+
+  const [title, setTitle] = useState(alarm?.title ?? '');
+  const [duration, setDuration] = useState(String(alarm?.duration) ?? '');
   const [item, setItem] = useState('');
-  const [items, setItems] = useState<string[]>([]);
+  const [items, setItems] = useState<string[]>(alarm?.list ?? []);
 
   const removeItem = (target: string) => {
     setItems(items.filter((item) => item !== target));
@@ -32,15 +43,23 @@ export default () => {
 
   const handleAdd = () => {
     if (!title || !duration) return;
+
     const data = {
       id: Date.now().toString(),
       title,
       duration: parseInt(duration, 10),
       list: items,
     };
-    addAlarm(data);
-    setTitle('');
-    setDuration('');
+
+    if (alarm) updateAlarm({ ...data, id: alarm.id });
+    else {
+      addAlarm(data)
+
+      // Reset hooks.
+      setTitle('');
+      setDuration('');
+      setItems([]);
+    };
   };
 
   return (
