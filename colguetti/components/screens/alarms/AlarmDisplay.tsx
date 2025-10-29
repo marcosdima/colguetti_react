@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useTheme } from '../../../contexts/theme-context';
 import { Alarm } from '../../../types/alarm';
 import Text from '../../../components/base/Text';
@@ -22,8 +22,9 @@ export default ({ item }: AlarmDisplayProps) => {
   const { navigate } = useNavigation<AlarmsScreenNavigationProp>();
 
   const { config: { language } } = useConfig();
-  const texts = translations[language].alarms.alarm;
-
+  const texts = translations[language];
+  const alarmsText = texts.alarms;
+  const alarmText = alarmsText.alarm;
 
   const iconConfig = {
     width: 22,
@@ -40,16 +41,27 @@ export default ({ item }: AlarmDisplayProps) => {
   }
 
   const onDelete = (alarmId: string) => {
-    removeAlarm(alarmId)
-  }
+    Alert.alert(
+      alarmsText.delete.title,
+      alarmsText.delete.question,
+      [
+        { text: alarmsText.delete.cancel, style: 'cancel' },
+        {
+          text: alarmsText.delete.ok,
+          style: 'destructive',
+          onPress: () => removeAlarm(alarmId),
+        },
+      ]
+    );
+  };
 
   return (
     <View style={[styles.item, { borderColor: theme.text.primary }]}>
 
       <View style={styles.info}>
         <Text>{item.title}</Text>
-        <Text>{texts.duration}: {item.duration} min</Text>
-        {item.list?.length > 0 && <Text>{texts.list}: {item.list.join(', ')}.</Text>}
+        <Text>{alarmText.duration}: {item.duration} min</Text>
+        {item.list?.length > 0 && <Text>{alarmText.list}: {item.list.join(', ')}.</Text>}
       </View>
 
       <View style={styles.actions}>

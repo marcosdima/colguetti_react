@@ -8,7 +8,7 @@ export const translations = {
       alias: {
         label: 'Alias',
         placeholder: 'Type your alias',
-      }
+      },
     },
     alarms: {
       title: 'Alarms',
@@ -40,6 +40,12 @@ export const translations = {
       },
       edit: {
         title: 'Edit alarm',
+      },
+      delete: {
+        title: 'Delete alarm',
+        question: 'Are you sure you want to delete this alarm?',
+        ok: 'Yes, I am',
+        cancel: 'Cancel',
       }
     },
     actions: {
@@ -87,7 +93,13 @@ export const translations = {
       },
       edit: {
         title: 'Editar alarma',
-      }
+      },
+      delete: {
+        title: 'Eliminar alarma',
+        question: '¿Seguro que querés eliminar esta alarma?',
+        ok: 'Si, estoy seguro',
+        cancel: 'Cancelar',
+      },
     },
     actions: {
       save: 'Guardar',
