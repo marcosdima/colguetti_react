@@ -9,6 +9,7 @@ import { Edit, Play, Xmark } from 'iconoir-react-native';
 import { AlarmStackParamList } from '../../../types/root-stack';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Title from '../../base/Title';
 
 type AlarmDisplayProps = {
   item: Alarm;
@@ -60,7 +61,7 @@ export default ({ item }: AlarmDisplayProps) => {
     <View style={[styles.item, { borderColor: theme.text.primary }]}>
 
       <View style={styles.info}>
-        <Text>{item.title}</Text>
+        <Title>{item.title}</Title>
         <Text>{alarmText.duration}: {item.duration} min</Text>
         {item.list?.length > 0 && <Text>{alarmText.list}: {item.list.join(', ')}.</Text>}
       </View>
@@ -92,6 +93,7 @@ const styles = StyleSheet.create({
   },
   info: {
     marginBottom: 8,
+    maxWidth: '60%',
   },
   actions: {
     flexDirection: 'row',
