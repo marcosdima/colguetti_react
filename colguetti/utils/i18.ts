@@ -60,6 +60,7 @@ export const translations = {
     },
     actions: {
       save: 'Save',
+      clear: 'Clear',
     },
   },
   es: {
@@ -123,6 +124,7 @@ export const translations = {
     },
     actions: {
       save: 'Guardar',
+      clear: 'Borrar',
     },
   },
 };

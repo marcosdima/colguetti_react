@@ -7,6 +7,9 @@ import { scheduleAlarmNotification } from '../../../utils/notifications'
 import { useConfig } from '../../../contexts/config-context'
 import { translations } from '../../../utils/i18'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Title from '../../base/Title'
+import Button from '../../inputs/Button'
+import { useNavigation } from '@react-navigation/native'
 
 const ActiveAlarmItem = ({ item, selected, onSelect }: {
   item: string
@@ -33,8 +36,9 @@ const ActiveAlarmItem = ({ item, selected, onSelect }: {
 }
 
 export default () => {
+  const navigation = useNavigation();
   const { theme } = useTheme();
-  const { alarms, activeAlarm, updateSelectedItems } = useAlarms();
+  const { alarms, activeAlarm, updateSelectedItems, stopAlarm } = useAlarms();
   const [remaining, setRemaining] = useState<number>(0);
   const { config: { language } } = useConfig();
   const texts = translations[language];
@@ -78,34 +82,46 @@ export default () => {
     if (remainingTime > 0) scheduleAlarmNotification(notification.title, body, remainingTime);
   };
 
-  return (
-    <SafeAreaView style={[styles.container, { borderColor: theme.text.primary }]}>
-      <Text style={styles.title}>{alarm.title}</Text>
-      <Text>{minutes}:{seconds.toString().padStart(2, '0')}</Text>
+  const onClear = () => {
+    stopAlarm();
+    navigation.goBack();
+  }
 
-      <View style={styles.list}>
-        {
-          alarm.list.map(item => (
-            <ActiveAlarmItem
-              key={item}
-              item={item}
-              selected={activeAlarm.selectedItems.includes(item)}
-              onSelect={updateSelectedItems}
-            />
-          ))
-        }
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={[styles.card, { borderColor: theme.text.primary }]}>
+        <Title style={styles.title}>{alarm.title}</Title>
+        <Text>{minutes}:{seconds.toString().padStart(2, '0')}</Text>
+
+        <View style={styles.list}>
+          {
+            alarm.list.map(item => (
+              <ActiveAlarmItem
+                key={item}
+                item={item}
+                selected={activeAlarm.selectedItems.includes(item)}
+                onSelect={updateSelectedItems}
+              />
+            ))
+          }
+        </View>
       </View>
+      <Button text={texts.actions.clear} onPress={onClear}/>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    marginVertical: 10,
+    margin: 12,
+    justifyContent: 'space-between',
+    height: '100%',
+  },
+  card: {
     padding: 12,
     borderWidth: 1,
     borderRadius: 10,
-    marginVertical: 10,
-    margin: 12,
   },
   title: {
     fontSize: 18,
