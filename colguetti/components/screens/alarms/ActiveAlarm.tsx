@@ -3,6 +3,9 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { useTheme } from '../../../contexts/theme-context'
 import { useAlarms } from '../../../contexts/alarms-context'
 import Text from '../../../components/base/Text'
+import { scheduleAlarmNotification } from '../../../utils/notifications'
+import { useConfig } from '../../../contexts/config-context'
+import { translations } from '../../../utils/i18'
 
 const ActiveAlarmItem = ({ item, selected, onSelect }: {
   item: string
@@ -29,34 +32,50 @@ const ActiveAlarmItem = ({ item, selected, onSelect }: {
 }
 
 export default () => {
-  const { theme } = useTheme()
-  const { alarms, activeAlarm, updateSelectedItems } = useAlarms()
-  const [remaining, setRemaining] = useState<number | null>(null)
+  const { theme } = useTheme();
+  const { alarms, activeAlarm, updateSelectedItems } = useAlarms();
+  const [remaining, setRemaining] = useState<number>(0);
+  const { config: { language } } = useConfig();
+  const texts = translations[language];
+  
+  if (!activeAlarm) return null;
 
-  if (!activeAlarm) return null
+  const alarm = alarms.find(a => a.id === activeAlarm.alarmId);
+  if (!alarm) return null;
 
-  const alarm = alarms.find(a => a.id === activeAlarm.alarmId)
-  if (!alarm) return null
+  useEffect(() => {
+    setNotification();
+  }, [activeAlarm]);
 
   useEffect(() => {
     const updateTime = () => {
-      const elapsed = Math.floor((Date.now() - activeAlarm.startedAt) / 1000)
-      const remainingTime = alarm.duration * 60 - elapsed
-      if (remainingTime < 0) clearInterval(interval)
-      else setRemaining(remainingTime)
+      const elapsed = Math.floor((Date.now() - activeAlarm.startedAt) / 1000);
+      const remainingTime = alarm.duration * 60 - elapsed;
+      if (remainingTime < 0) clearInterval(interval);
+      else setRemaining(remainingTime);
     }
 
-    updateTime()
-    const interval = setInterval(updateTime, 1000)
-    return () => clearInterval(interval)
-  }, [alarm, activeAlarm])
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, [alarm, activeAlarm]);
 
-  const minutes = Math.max(0, Math.floor((remaining ?? 0) / 60))
-  const seconds = Math.max(0, (remaining ?? 0) % 60)
+  const minutes = Math.max(0, Math.floor(remaining / 60));
+  const seconds = Math.max(0, remaining % 60);
 
-  const onSelectItem = (item: string) => {
-    updateSelectedItems(item)
-  }
+  const setNotification = () => {
+    const failed = activeAlarm.selectedItems.length < alarm.list.length;
+    const notification = failed ? texts.notification.fail : texts.notification.success;
+    
+    const body = failed
+      ? `${notification.body} ${alarm.list.filter((item) => !activeAlarm.selectedItems.includes(item))}`
+      : notification.body;
+    
+    const elapsed = Math.floor((Date.now() - activeAlarm.startedAt) / 1000);
+    const remainingTime = alarm.duration * 60 - elapsed;
+
+    if (remainingTime > 0) scheduleAlarmNotification(notification.title, body, remainingTime);
+  };
 
   return (
     <View style={[styles.container, { borderColor: theme.text.primary }]}>
@@ -70,7 +89,7 @@ export default () => {
               key={item}
               item={item}
               selected={activeAlarm.selectedItems.includes(item)}
-              onSelect={onSelectItem}
+              onSelect={updateSelectedItems}
             />
           ))
         }

@@ -46,7 +46,17 @@ export const translations = {
         question: 'Are you sure you want to delete this alarm?',
         ok: 'Yes, I am',
         cancel: 'Cancel',
-      }
+      },
+    },
+    notification: {
+      success: {
+        title: 'You are not a Colguetti',
+        body: "Wow, I can't believe it...",
+      },
+      fail: {
+        title: 'Your are a Colguetti',
+        body: 'Missed items:',
+      },
     },
     actions: {
       save: 'Save',
@@ -99,6 +109,16 @@ export const translations = {
         question: '¿Seguro que querés eliminar esta alarma?',
         ok: 'Si, estoy seguro',
         cancel: 'Cancelar',
+      },
+    },
+    notification: {
+      success: {
+        title: 'You are not a Colguetti',
+        body: "Wow, I can't believe it...",
+      },
+      fail: {
+        title: 'Your are a Colguetti',
+        body: 'Missed items:',
       },
     },
     actions: {

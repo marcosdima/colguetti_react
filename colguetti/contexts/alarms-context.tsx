@@ -50,6 +50,9 @@ export const AlarmProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const activateAlarm = async (id: string) => {
+    const alarm = alarms.find((item) => item.id === id);
+    if (!alarm) return;
+
     const active = { alarmId: id, startedAt: Date.now(), selectedItems: [] };
     setActiveAlarm(active);
     await saveItem(activeAlarmKey, JSON.stringify(active));
