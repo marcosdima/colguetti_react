@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { getItem, saveItem } from '../utils/storage';
 import { Alarm, ActiveAlarm } from '../types/alarm';
 import { ViewProps } from '../types/default-react';
+import { cancelNotification } from '../utils/notifications';
 
 const activeAlarmKey = 'activeAlarm'
 const alarmsKey = 'alarms'
@@ -61,7 +62,8 @@ export const AlarmProvider = ({ children, ...props }: ViewProps) => {
 
   const stopAlarm = async () => {
     setActiveAlarm(null);
-    await saveItem(activeAlarmKey, '');
+    cancelNotification();
+    saveItem(activeAlarmKey, '');
   };
 
   const updateSelectedItems = async (item: string) => {
