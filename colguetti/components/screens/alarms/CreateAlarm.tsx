@@ -87,7 +87,6 @@ export default () => {
           <TextInput
             value={item}
             onChangeText={setItem}
-            keyboardType='numeric'
             placeholder={fields.list.placeholder}
             onSubmitEditing={() => addItem(item)}
           />
