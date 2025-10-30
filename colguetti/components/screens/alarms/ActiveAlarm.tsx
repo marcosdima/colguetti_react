@@ -6,6 +6,7 @@ import Text from '../../../components/base/Text'
 import { scheduleAlarmNotification } from '../../../utils/notifications'
 import { useConfig } from '../../../contexts/config-context'
 import { translations } from '../../../utils/i18'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const ActiveAlarmItem = ({ item, selected, onSelect }: {
   item: string
@@ -78,7 +79,7 @@ export default () => {
   };
 
   return (
-    <View style={[styles.container, { borderColor: theme.text.primary }]}>
+    <SafeAreaView style={[styles.container, { borderColor: theme.text.primary }]}>
       <Text style={styles.title}>{alarm.title}</Text>
       <Text>{minutes}:{seconds.toString().padStart(2, '0')}</Text>
 
@@ -94,7 +95,7 @@ export default () => {
           ))
         }
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 

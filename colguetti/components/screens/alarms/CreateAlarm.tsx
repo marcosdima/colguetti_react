@@ -10,8 +10,7 @@ import { translations } from '../../../utils/i18';
 import Chips from '../../inputs/Chips';
 import { useRoute } from '@react-navigation/native';
 import { CreateRouteProp } from '../../../types/root-stack';
-
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default () => {
   const { theme } = useTheme();
@@ -63,7 +62,7 @@ export default () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.fields}>
         <View>
           <Text style={styles.label}>{fields.title.label}</Text>
@@ -98,7 +97,7 @@ export default () => {
         onPress={handleAdd}
         disabled={!title || !duration}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

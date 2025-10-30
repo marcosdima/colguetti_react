@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useConfig } from '../../contexts/config-context'
 import InputComponent from "../inputs/InputComponent";
 import LanguagePanel from "../inputs/LanguagePanel";
 import { translations } from "../../utils/i18";
 import ThemeChanger from "../inputs/ThemeChanger";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default () => {
   const { config: { alias, language } , saveAlias } = useConfig();
@@ -20,7 +21,7 @@ export default () => {
   }
   
   return (
-    <View style={styles.contenedor}>
+    <SafeAreaView style={styles.contenedor}>
       <LanguagePanel/>
       <ThemeChanger/>
       <InputComponent
@@ -31,7 +32,7 @@ export default () => {
         placeholder={texts.config.alias.placeholder}
         disableButton={alias === auxAlias}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -1,4 +1,4 @@
-import { View, FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import Text from "../../../components/base/Text";
 import Button from "../../../components/inputs/Button";
 import { useAlarms } from "../../../contexts/alarms-context";
@@ -7,9 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import AlarmDisplay from "./AlarmDisplay";
 import { translations } from "../../../utils/i18";
 import { useConfig } from "../../../contexts/config-context";
-
-
-
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default () => {
   const { navigate } = useNavigation<AlarmsScreenNavigationProp>();
@@ -20,7 +18,7 @@ export default () => {
   const alarm = alarms.find((al) => al.id === activeAlarm?.alarmId);
   
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {
         alarm
         ? <Text>{texts.alarms.active.exists}: {alarm.title}</Text>
@@ -35,7 +33,7 @@ export default () => {
       />
 
       <Button text={texts.alarms.button} onPress={() => navigate('Create', {})} />
-    </View>
+    </SafeAreaView>
   );
 };
 
