@@ -1,55 +1,103 @@
-import { useNavigation } from "@react-navigation/native";
-import { View, StyleSheet } from "react-native";
-import { HomeScreenNavigationProp } from "../../types/root-stack";
-import { useConfig } from "../../contexts/config-context";
-import Title from "../base/Title";
-import SubTitle from "../base/SubTitle";
-import Button from "../inputs/Button";
-import { useAlarms } from "../../contexts/alarms-context";
-import { useEffect } from "react";
+import { useEffect } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useConfig } from '../../contexts/config-context';
+import { useAlarms } from '../../contexts/alarms-context';
+import { HomeScreenNavigationProp } from '../../types/root-stack';
+import Title from '../base/Title';
+import { Settings, Alarm, Play } from 'iconoir-react-native';
+import Text from '../base/Text';
+import { useTheme } from '../../contexts/theme-context';
 
+const Card = ({
+  icon: Icon,
+  label,
+  onPress,
+  highlight,
+}: {
+  icon: any;
+  label: string;
+  onPress: () => void;
+  highlight?: boolean;
+}) => {
+  const { theme } = useTheme();
+  const color = highlight ? theme.primary : theme.text.primary;
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.card, { borderColor: color }]}
+    >
+      <Icon width={28} height={28} color={color} />
+      <Text style={{ color }}>{label}</Text>
+    </TouchableOpacity>
+  )
+};
 
-
-export default function Home() {
+export default () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const { config } = useConfig();
   const { activeAlarm } = useAlarms();
-
+  
   useEffect(() => {
     if (activeAlarm) {
       navigation.navigate('AlarmsNavigator', { screen: 'Active' });
     }
   }, [activeAlarm]);
-  
+
   return (
     <View style={styles.container}>
-      <Title>Main Screen</Title>
-      <SubTitle>
+      <Title>{config?.alias ? `Hola, ${config.alias}` : 'Bienvenido'}</Title>
+      <View style={styles.cards}>
+        <Card
+          icon={Alarm}
+          label='Alarmas'
+          onPress={() =>
+            navigation.navigate('AlarmsNavigator', { screen: 'Alarms' })
+          }
+        />
+
+        <Card
+          icon={Settings}
+          label='Configuración'
+          onPress={() => navigation.navigate('Configuration')}
+        />
+
         {
-          config?.alias
-            ? `Hi ${config.alias}!`
-            : 'Hi there!'
+          activeAlarm && (
+            <Card
+              icon={Play}
+              label='Alarma activa'
+              highlight={true}
+              onPress={() =>
+                navigation.navigate('AlarmsNavigator', { screen: 'Active' })
+              }
+            />
+          )
         }
-      </SubTitle>
-      <View style={styles.buttons}>
-        <Button text="Go to config" onPress={() => navigation.navigate('Configuration')} />
-        <Button text="Go to alarms" onPress={() => navigation.navigate('AlarmsNavigator', { screen: 'Alarms' })} />
-        {activeAlarm && <Button text="Go to active alarms" onPress={() => navigation.navigate('AlarmsNavigator', { screen: 'Active' })} />}
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingTop: 40,
+    justifyContent: 'flex-start',
+    paddingTop: 60,
+    gap: 30,
   },
-  buttons: {
-    flex: 1,
-    gap: 10,
-    paddingTop: 20,
-  }
+  cards: {
+    width: '90%',
+    gap: 20,
+  },
+  card: {
+    borderWidth: 1.5,
+    borderRadius: 10,
+    paddingVertical: 16,
+    paddingHorizontal: 18,
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 14,
+  },
 });
