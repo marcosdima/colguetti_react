@@ -49,7 +49,23 @@ export default () => {
   if (!alarm) return null;
 
   useEffect(() => {
-    setNotification();
+    const failed = activeAlarm.selectedItems.length < alarm.list.length;
+    const notification = failed
+      ? texts.notification.fail
+      : texts.notification.success;
+    
+    const body = failed
+      ? `${notification.body} ${
+          alarm.list
+          .filter((item) => !activeAlarm.selectedItems.includes(item))
+          .join(', ')
+        }.`
+      : notification.body;
+    
+    const elapsed = Math.floor((Date.now() - activeAlarm.startedAt) / 1000);
+    const remainingTime = alarm.duration * 60 - elapsed;
+
+    if (remainingTime > 0) scheduleAlarmNotification(notification.title, body, remainingTime);
   }, [activeAlarm]);
 
   useEffect(() => {
@@ -67,20 +83,6 @@ export default () => {
 
   const minutes = Math.max(0, Math.floor(remaining / 60));
   const seconds = Math.max(0, remaining % 60);
-
-  const setNotification = () => {
-    const failed = activeAlarm.selectedItems.length < alarm.list.length;
-    const notification = failed ? texts.notification.fail : texts.notification.success;
-    
-    const body = failed
-      ? `${notification.body} ${alarm.list.filter((item) => !activeAlarm.selectedItems.includes(item))}`
-      : notification.body;
-    
-    const elapsed = Math.floor((Date.now() - activeAlarm.startedAt) / 1000);
-    const remainingTime = alarm.duration * 60 - elapsed;
-
-    if (remainingTime > 0) scheduleAlarmNotification(notification.title, body, remainingTime);
-  };
 
   const onClear = () => {
     stopAlarm();
