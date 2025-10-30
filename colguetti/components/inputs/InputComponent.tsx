@@ -36,6 +36,7 @@ export default (
           onChangeText={setValue}
           placeholder={placeholder}
           style={styles.inputText}
+          onSubmitEditing={onSave}
         />
         <View style={styles.buttonWrapper}>
           <Button
