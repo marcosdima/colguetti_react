@@ -9,8 +9,7 @@ const getNotificationId = async () => await getItem(notificationIdKey)
 const saveNotificationId = async (id: string) => await saveItem(notificationIdKey, id)
 
 export const scheduleAlarmNotification = async (title: string, body: string, triggerSeconds: number) => {
-  const notificationIdExists = await getNotificationId();
-  if (notificationIdExists) await cancelNotification(notificationIdExists);
+  await cancelNotification();
   
   const notificationId = await Notifications.scheduleNotificationAsync({
     content: {
@@ -25,7 +24,6 @@ export const scheduleAlarmNotification = async (title: string, body: string, tri
   
   await saveNotificationId(notificationId);
 };
-
 
 export const setupNotifications = async () => {
   const { status } = await Notifications.requestPermissionsAsync();
@@ -48,7 +46,7 @@ export const setupNotifications = async () => {
   );
 };
 
-export const cancelNotification = async (notificationId: string) => (
-  Notifications.cancelScheduledNotificationAsync(notificationId)
-);
-
+export const cancelNotification = async () => {
+  const notificationId = await getNotificationId();
+  notificationId && Notifications.cancelScheduledNotificationAsync(notificationId);
+};
