@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext } from 'react';
 import { useEffect, useState } from 'react';
 import { getItem, saveItem } from '../utils/storage';
+import { ViewProps } from '../types/default-react';
 
 type Config = {
   alias: string;
@@ -56,9 +57,9 @@ const useConfigContext = () => {
   };
 };
 
-export const ConfigProvider = ({ children }: { children: ReactNode }) => {
+export const ConfigProvider = ({ children, ...props }: ViewProps) => {
   const value = useConfigContext();
-  return <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>;
+  return <ConfigContext.Provider {...props} value={value}>{children}</ConfigContext.Provider>;
 };
 
 export const useConfig = () => {

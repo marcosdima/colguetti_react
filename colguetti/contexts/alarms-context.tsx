@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { getItem, saveItem } from '../utils/storage';
 import { Alarm, ActiveAlarm } from '../types/alarm';
+import { ViewProps } from '../types/default-react';
 
 const activeAlarmKey = 'activeAlarm'
 const alarmsKey = 'alarms'
@@ -18,7 +19,7 @@ type AlarmContextType = {
 
 const AlarmContext = createContext<AlarmContextType | undefined>(undefined);
 
-export const AlarmProvider = ({ children }: { children: ReactNode }) => {
+export const AlarmProvider = ({ children, ...props }: ViewProps) => {
   const [alarms, setAlarms] = useState<Alarm[]>([]);
   const [activeAlarm, setActiveAlarm] = useState<ActiveAlarm | null>(null);
   
@@ -74,6 +75,7 @@ export const AlarmProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AlarmContext.Provider
+      {...props}
       value={{
         alarms,
         activeAlarm,

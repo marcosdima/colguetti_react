@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { getItem, saveItem } from '../utils/storage';
 import { lightTheme, darkTheme } from '../utils/theme';
+import { ViewProps } from '../types/default-react';
 
 type ThemeType = typeof lightTheme;
 type ThemeName = 'light' | 'dark';
@@ -13,7 +14,7 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+export const ThemeProvider = ({ children, ...props }: ViewProps) => {
   const [themeName, setThemeName] = useState<ThemeName>('light');
 
   useEffect(() => {
@@ -32,7 +33,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const theme = themeName === 'light' ? lightTheme : darkTheme;
 
   return (
-    <ThemeContext.Provider value={{ theme, themeName, toggleTheme }}>
+    <ThemeContext.Provider
+      {...props}
+      value={{ theme, themeName, toggleTheme }}
+      >
       {children}
     </ThemeContext.Provider>
   );

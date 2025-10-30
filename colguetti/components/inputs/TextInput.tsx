@@ -1,10 +1,8 @@
 import { TextInput } from "react-native"
 import { useTheme } from "../../contexts/theme-context"
-import { ComponentProps } from "react";
+import { TextInputProps } from "../../types/default-react";
 
-type ThemedTextInputProps = ComponentProps<typeof TextInput>;
-
-export default ({ style, ...props }: ThemedTextInputProps) => {
+export default ({ style, ...props }: TextInputProps) => {
   const { theme } = useTheme();
   
   const inputStyle = {
