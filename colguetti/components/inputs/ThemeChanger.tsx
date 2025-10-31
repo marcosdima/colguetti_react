@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Pressable, Animated, StyleSheet } from 'react-native';
-import { MoonSat, SunLight } from 'iconoir-react-native';
+import { Moon, Sun } from 'lucide-react-native';
 import { useTheme } from '../../contexts/theme-context';
 
 export default () => {
@@ -36,9 +36,9 @@ export default () => {
       <Animated.View style={[styles.switch, { backgroundColor: bgColor, borderColor: borderColor }]}>
         <Animated.View style={[styles.circle, { left: circlePos }]}>
           {themeName === 'dark' ? (
-            <MoonSat height={20} width={20} color="#fff" />
+            <Moon size={20} color="#fff" />
           ) : (
-            <SunLight height={20} width={20} color="#000" />
+            <Sun size={20} width={20} color="#000" />
           )}
         </Animated.View>
       </Animated.View>

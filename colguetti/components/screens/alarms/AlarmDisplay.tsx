@@ -5,7 +5,7 @@ import Text from '../../../components/base/Text';
 import { translations } from '../../../utils/i18';
 import { useConfig } from '../../../contexts/config-context';
 import { useAlarms } from '../../../contexts/alarms-context';
-import { Edit, Play, Xmark } from 'iconoir-react-native';
+import { Pencil, Play, X } from 'lucide-react-native';
 import { AlarmStackParamList } from '../../../types/root-stack';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -28,8 +28,7 @@ export default ({ item }: AlarmDisplayProps) => {
   const alarmText = alarmsText.alarm;
 
   const iconConfig = {
-    width: 22,
-    height: 22,
+    size: 22,
     color: theme.text.primary
   }
 
@@ -68,13 +67,13 @@ export default ({ item }: AlarmDisplayProps) => {
 
       <View style={styles.actions}>
         <TouchableOpacity onPress={onEdit}>
-          <Edit {...iconConfig} />
+          <Pencil {...iconConfig} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onActive(item.id)}>
           <Play {...iconConfig} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onDelete(item.id)}>
-          <Xmark {...iconConfig} />
+          <X {...iconConfig} />
         </TouchableOpacity>
       </View>
 

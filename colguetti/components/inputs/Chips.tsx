@@ -1,7 +1,7 @@
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Text from '../base/Text';
 import { useTheme } from '../../contexts/theme-context';
-import { Xmark } from 'iconoir-react-native'; // Si no lo tenés, se puede reemplazar por un emoji o texto
+import { X } from 'lucide-react-native';
 
 type ChipsProps = {
   items: string[];
@@ -26,7 +26,7 @@ export default ({ items, onRemove }: ChipsProps) => {
         >
           <Text style={[styles.text, { color: theme.text.primary }]}>{item}</Text>
           <TouchableOpacity onPress={() => onRemove(item)}>
-            <Xmark color={theme.text.primary} width={16} height={16} />
+            <X color={theme.text.primary} size={16} />
           </TouchableOpacity>
         </View>
       ))}

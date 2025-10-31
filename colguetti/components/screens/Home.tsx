@@ -5,9 +5,11 @@ import { useConfig } from '../../contexts/config-context';
 import { useAlarms } from '../../contexts/alarms-context';
 import { HomeScreenNavigationProp } from '../../types/root-stack';
 import Title from '../base/Title';
-import { Settings, Alarm, Play } from 'iconoir-react-native';
+import { Play, AlarmClock, Settings } from 'lucide-react-native';
 import Text from '../base/Text';
 import { useTheme } from '../../contexts/theme-context';
+import GoUp from '../animations/GoUp';
+import Button from '../inputs/Button';
 
 const Card = ({
   icon: Icon,
@@ -27,7 +29,7 @@ const Card = ({
       onPress={onPress}
       style={[styles.card, { borderColor: color }]}
     >
-      <Icon width={28} height={28} color={color} />
+      <Icon size={28} color={color} />
       <Text style={{ color }}>{label}</Text>
     </TouchableOpacity>
   )
@@ -49,7 +51,7 @@ export default () => {
       <Title>{config?.alias ? `Hola, ${config.alias}` : 'Bienvenido'}</Title>
       <View style={styles.cards}>
         <Card
-          icon={Alarm}
+          icon={AlarmClock}
           label='Alarmas'
           onPress={() =>
             navigation.navigate('AlarmsNavigator', { screen: 'Alarms' })
