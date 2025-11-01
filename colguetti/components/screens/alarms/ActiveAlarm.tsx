@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { useTheme } from '../../../contexts/theme-context'
 import { useAlarms } from '../../../contexts/alarms-context'
@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Title from '../../base/Title'
 import Button from '../../inputs/Button'
 import { useNavigation } from '@react-navigation/native'
+import Clock from '../../animations/Clock'
 
 const ActiveAlarmItem = ({ item, selected, onSelect }: {
   item: string
@@ -39,7 +40,6 @@ export default () => {
   const navigation = useNavigation();
   const { theme } = useTheme();
   const { alarms, activeAlarm, updateSelectedItems, stopAlarm } = useAlarms();
-  const [remaining, setRemaining] = useState<number>(0);
   const { config: { language } } = useConfig();
   const texts = translations[language];
   
@@ -68,33 +68,21 @@ export default () => {
     if (remainingTime > 0) scheduleAlarmNotification(notification.title, body, remainingTime);
   }, [activeAlarm]);
 
-  useEffect(() => {
-    const updateTime = () => {
-      const elapsed = Math.floor((Date.now() - activeAlarm.startedAt) / 1000);
-      const remainingTime = alarm.duration * 60 - elapsed;
-      if (remainingTime < 0) clearInterval(interval);
-      else setRemaining(remainingTime);
-    }
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, [alarm, activeAlarm]);
-
-  const minutes = Math.max(0, Math.floor(remaining / 60));
-  const seconds = Math.max(0, remaining % 60);
-
   const onClear = () => {
     stopAlarm();
     navigation.goBack();
   }
 
+  const elapsed = Math.floor((Date.now() - activeAlarm.startedAt) / 1000);
+  const remainingTime = alarm.duration * 60 - elapsed;
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.card, { borderColor: theme.text.primary }]}>
-        <Title style={styles.title}>{alarm.title}</Title>
-        <Text>{minutes}:{seconds.toString().padStart(2, '0')}</Text>
-
+        <View style={styles.top}>
+          <Title style={styles.title}>{alarm.title}</Title>
+          <Clock initialSeconds={remainingTime > 0 ? remainingTime : 0}/>
+        </View>
         <View style={styles.list}>
           {
             alarm.list.map(item => (
@@ -140,5 +128,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 6,
+  },
+  top: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingRight: 10,
   },
 })

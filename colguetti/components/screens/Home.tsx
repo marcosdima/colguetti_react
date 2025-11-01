@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useConfig } from '../../contexts/config-context';
@@ -9,7 +9,7 @@ import { Play, AlarmClock, Settings } from 'lucide-react-native';
 import Text from '../base/Text';
 import { useTheme } from '../../contexts/theme-context';
 import GoUp from '../animations/GoUp';
-import Button from '../inputs/Button';
+import Clock from '../animations/Clock';
 
 const Card = ({
   icon: Icon,
@@ -39,7 +39,7 @@ export default () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const { config } = useConfig();
   const { activeAlarm } = useAlarms();
-  
+
   useEffect(() => {
     if (activeAlarm) {
       navigation.navigate('AlarmsNavigator', { screen: 'Active' });
@@ -49,34 +49,35 @@ export default () => {
   return (
     <View style={styles.container}>
       <Title>{config?.alias ? `Hola, ${config.alias}` : 'Bienvenido'}</Title>
-      <View style={styles.cards}>
-        <Card
-          icon={AlarmClock}
-          label='Alarmas'
-          onPress={() =>
-            navigation.navigate('AlarmsNavigator', { screen: 'Alarms' })
+      <GoUp style={styles.cards}>
+          <Card
+            icon={AlarmClock}
+            label='Alarmas'
+            onPress={() =>
+              navigation.navigate('AlarmsNavigator', { screen: 'Alarms' })
+            }
+          />
+
+          <Card
+            icon={Settings}
+            label='Configuración'
+            onPress={() => navigation.navigate('Configuration')}
+          />
+
+          {
+            activeAlarm && (
+              <Card
+                icon={Play}
+                label='Alarma activa'
+                highlight={true}
+                onPress={() =>
+                  navigation.navigate('AlarmsNavigator', { screen: 'Active' })
+                }
+              />
+            )
           }
-        />
 
-        <Card
-          icon={Settings}
-          label='Configuración'
-          onPress={() => navigation.navigate('Configuration')}
-        />
-
-        {
-          activeAlarm && (
-            <Card
-              icon={Play}
-              label='Alarma activa'
-              highlight={true}
-              onPress={() =>
-                navigation.navigate('AlarmsNavigator', { screen: 'Active' })
-              }
-            />
-          )
-        }
-      </View>
+      </GoUp>
     </View>
   );
 };
