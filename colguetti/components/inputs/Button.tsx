@@ -1,4 +1,5 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import Pop from '../animations/Pop';
 
 type ButtonProps = {
   onPress: () => void;
@@ -13,13 +14,15 @@ const Button = (
     text,
   }: ButtonProps
 ) => (
-  <TouchableOpacity
-    style={[styles.button, disabled && styles.disabled]}
-    onPress={onPress}
-    disabled={disabled}
-  >
-    <Text style={styles.text}>{text}</Text>
-  </TouchableOpacity>
+  <Pop>
+    <TouchableOpacity
+      style={[styles.button, disabled && styles.disabled]}
+      onPress={onPress}
+      disabled={disabled}
+    >
+      <Text style={styles.text}>{text}</Text>
+    </TouchableOpacity>
+  </Pop>
 );
 
 const styles = StyleSheet.create({

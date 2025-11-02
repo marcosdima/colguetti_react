@@ -11,6 +11,7 @@ import Title from '../../base/Title'
 import Button from '../../inputs/Button'
 import { useNavigation } from '@react-navigation/native'
 import Clock from '../../animations/Clock'
+import Pop from '../../animations/Pop'
 
 const ActiveAlarmItem = ({ item, selected, onSelect }: {
   item: string
@@ -83,7 +84,7 @@ export default () => {
           <Title style={styles.title}>{alarm.title}</Title>
           <Clock initialSeconds={remainingTime > 0 ? remainingTime : 0}/>
         </View>
-        <View style={styles.list}>
+        <Pop style={styles.list}>
           {
             alarm.list.map(item => (
               <ActiveAlarmItem
@@ -94,7 +95,7 @@ export default () => {
               />
             ))
           }
-        </View>
+        </Pop>
       </View>
       <Button text={texts.actions.clear} onPress={onClear}/>
     </SafeAreaView>

@@ -2,6 +2,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Text from '../base/Text';
 import { useTheme } from '../../contexts/theme-context';
 import { X } from 'lucide-react-native';
+import Pop from '../animations/Pop';
 
 type ChipsProps = {
   items: string[];
@@ -12,25 +13,27 @@ export default ({ items, onRemove }: ChipsProps) => {
   const { theme } = useTheme();
 
   return (
-    <View style={styles.container}>
-      {items.map((item) => (
-        <View
-          key={item}
-          style={[
-            styles.chip,
-            {
-              backgroundColor: theme.background,
-              borderColor: theme.text.primary,
-            },
-          ]}
-        >
-          <Text style={[styles.text, { color: theme.text.primary }]}>{item}</Text>
-          <TouchableOpacity onPress={() => onRemove(item)}>
-            <X color={theme.text.primary} size={16} />
-          </TouchableOpacity>
-        </View>
-      ))}
-    </View>
+    <Pop style={styles.container}>
+      {
+        items.map((item) => (
+          <View
+            key={item}
+            style={[
+              styles.chip,
+              {
+                backgroundColor: theme.background,
+                borderColor: theme.text.primary,
+              },
+            ]}
+          >
+            <Text style={[styles.text, { color: theme.text.primary }]}>{item}</Text>
+            <TouchableOpacity onPress={() => onRemove(item)}>
+              <X color={theme.text.primary} size={16} />
+            </TouchableOpacity>
+          </View>
+        ))
+      }
+    </Pop>
   );
 };
 
