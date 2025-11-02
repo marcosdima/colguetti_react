@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import NumberPass from './NumberPass';
 import Text from '../base/Text';
@@ -11,10 +11,13 @@ const pad = (num: number) => num.toString().padStart(2, '0');
 
 export default ({ initialSeconds }: ClockProps) => {
   const [secondsLeft, setSecondsLeft] = useState(initialSeconds);
+  const { current: endTimeRef } = useRef(Date.now() + initialSeconds * 1000);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSecondsLeft(prev => (prev > 0 ? prev - 1 : 0));
+      const now = Date.now();
+      const remaining = Math.max(0, Math.round((endTimeRef - now) / 1000));
+      setSecondsLeft(remaining);
     }, 1000);
 
     return () => clearInterval(interval);
