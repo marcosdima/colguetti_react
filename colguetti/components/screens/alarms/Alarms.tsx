@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, ScrollView, StyleSheet } from "react-native";
 import Text from "../../../components/base/Text";
 import Button from "../../../components/inputs/Button";
 import { useAlarms } from "../../../contexts/alarms-context";
@@ -8,6 +8,7 @@ import AlarmDisplay from "./AlarmDisplay";
 import { translations } from "../../../utils/i18";
 import { useConfig } from "../../../contexts/config-context";
 import { SafeAreaView } from "react-native-safe-area-context";
+import GoUp from "../../animations/GoUp";
 
 export default () => {
   const { navigate } = useNavigation<AlarmsScreenNavigationProp>();
@@ -25,12 +26,18 @@ export default () => {
         : <Text>{texts.alarms.active.dontExists}</Text>
       }
 
-      <FlatList
-        data={alarms}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <AlarmDisplay item={item}/>}
-        style={styles.list}
-      />
+      <ScrollView style={styles.list}>
+        <GoUp
+          duration={700}
+          yMovement={50}
+        >
+          {
+            alarms.map((item) => (
+              <AlarmDisplay key={item.id} item={item}/>
+            ))
+          }
+        </GoUp>
+      </ScrollView>
 
       <Button text={texts.alarms.button} onPress={() => navigate('Create', {})} />
     </SafeAreaView>

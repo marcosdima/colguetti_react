@@ -2,7 +2,21 @@ import React, { useRef, useCallback } from 'react';
 import { Animated, View, ViewProps } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
-export default ({ children, ...props }: ViewProps) => {
+type GoUpProps = ViewProps & {
+  yMovement?: number;
+  duration?: number;
+  delay?: number;
+};
+
+export default (
+  {
+    children,
+    yMovement = 20,
+    duration = 400,
+    delay = 200,
+    ...props
+  }: GoUpProps
+) => {
   const animatedValues = React.Children.map(children, () => useRef(new Animated.Value(0)).current);
   if (!animatedValues) return;
 
@@ -10,12 +24,12 @@ export default ({ children, ...props }: ViewProps) => {
     const animations = animatedValues.map((anim) =>
       Animated.timing(anim, {
         toValue: 1,
-        duration: 400,
+        duration,
         useNativeDriver: true,
       })
     );
 
-    Animated.stagger(200, animations).start();
+    Animated.stagger(delay, animations).start();
   }
   
   useFocusEffect(
@@ -39,7 +53,7 @@ export default ({ children, ...props }: ViewProps) => {
               {
                 translateY: animatedValues[index].interpolate({
                   inputRange: [0, 1],
-                  outputRange: [20, 0],
+                  outputRange: [yMovement, 0],
                 }),
               },
             ],
