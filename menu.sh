@@ -23,8 +23,7 @@ while true; do
   echo -e "===============================${NC}"
   echo -e "${YELLOW}1)${NC} Build Release (APK)"
   echo -e "${YELLOW}2)${NC} Debug"
-  echo -e "${YELLOW}3)${NC} Clean"
-  echo -e "${YELLOW}4)${NC} Exit"
+  echo -e "${YELLOW}3)${NC} Exit"
   echo -e "${YELLOW}Any)${NC} Build dev"
   echo -e "${CYAN}===============================${NC}"
   read -p "Choose an option: " choice
@@ -33,7 +32,11 @@ while true; do
     1)
       clear
       echo -e "${GREEN}Running release build...${NC}"
-      npm run build:release
+      
+      cd android
+      ./gradlew assembleRelease
+      cd ..
+      
       echo -e "${GREEN}Release build completed!${NC}"
       read -p "Press Enter to return to menu..."
       ;;
@@ -47,19 +50,6 @@ while true; do
       read -p "Press Enter to return to menu..."
       ;;
     3)
-      clear
-      echo -e "${CYAN}Cleaning project...${NC}"
-      rm -rf node_modules
-      rm -rf .expo
-      rm -rf dist
-      rm -rf build
-      npm cache clean --force
-      npm install
-      echo -e "${GREEN}Clean completed!${NC}"
-      read -p "Press Enter to return to menu..."
-      ;;
-    4)
-      echo -e "${RED}Exiting...${NC}"
       exit 0
       ;;
     *)
