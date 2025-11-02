@@ -103,15 +103,15 @@ export default () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
+    flex: 1,
     margin: 12,
     justifyContent: 'space-between',
-    height: '100%',
   },
   card: {
     padding: 12,
     borderWidth: 1,
     borderRadius: 10,
+    marginBottom: 'auto',
   },
   title: {
     fontSize: 18,
