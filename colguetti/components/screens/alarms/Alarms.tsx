@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import Text from "../../../components/base/Text";
 import Button from "../../../components/inputs/Button";
 import { useAlarms } from "../../../contexts/alarms-context";

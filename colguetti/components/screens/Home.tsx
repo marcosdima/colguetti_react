@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useConfig } from '../../contexts/config-context';
@@ -9,7 +9,6 @@ import { Play, AlarmClock, Settings } from 'lucide-react-native';
 import Text from '../base/Text';
 import { useTheme } from '../../contexts/theme-context';
 import GoUp from '../animations/GoUp';
-import Clock from '../animations/Clock';
 
 const Card = ({
   icon: Icon,
