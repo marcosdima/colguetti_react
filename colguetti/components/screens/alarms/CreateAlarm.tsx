@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import Button from '../../../components/inputs/Button';
-import Text from '../../../components/base/Text';
+import { useRoute } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../../../contexts/theme-context';
 import { useAlarms } from '../../../contexts/alarms-context';
-import TextInput from '../../inputs/TextInput';
 import { useConfig } from '../../../contexts/config-context';
 import { translations } from '../../../utils/i18';
-import Chips from '../../inputs/Chips';
-import { useRoute } from '@react-navigation/native';
 import { CreateRouteProp } from '../../../types/root-stack';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import Button from '../../../components/inputs/Button';
+import Text from '../../../components/base/Text';
 import GoUp from '../../animations/GoUp';
+import Chips from '../../inputs/Chips';
+import TextInput from '../../inputs/TextInput';
+import { error } from '../../../utils/toast';
 
 export default () => {
   const { theme } = useTheme();
@@ -32,17 +33,37 @@ export default () => {
   const [item, setItem] = useState('');
   const [items, setItems] = useState<string[]>(alarm?.list ?? []);
 
-  const removeItem = (target: string) => {
-    setItems(items.filter((item) => item !== target));
+  const setError = (text: string) => {
+    error('Error', text, 5000);
   }
 
   const addItem = (newItem: string) => {
-    if (!items.includes(newItem)) setItems(items.concat(newItem));
+    if (!newItem.trim()) {
+      setError(texts.errors.invalidFields.list.valid);
+      return;
+    }
+    if (items.includes(newItem)) {
+      setError(texts.errors.invalidFields.list.unique);
+      return;
+    }
+    
+    setItems(items.concat(newItem));
     setItem('');
   }
 
   const handleAdd = () => {
-    if (!title || !duration) return;
+    if (!title) {
+      setError(texts.errors.requiredFields.title);
+      return;
+    }
+    if (!duration) {
+      setError(texts.errors.requiredFields.duration);
+      return;
+    }
+    if (isNaN(parseInt(duration, 10))) {
+      setError(texts.errors.invalidFields.duration);
+      return;
+    }
 
     const data = {
       id: Date.now().toString(),
@@ -90,7 +111,10 @@ export default () => {
             placeholder={fields.list.placeholder}
             onSubmitEditing={() => addItem(item)}
           />
-          <Chips items={items} onRemove={removeItem}/>
+          <Chips
+            items={items}
+            onRemove={(target) => setItems(items.filter((item) => item !== target))}
+            />
         </View>
       </GoUp>
       <Button

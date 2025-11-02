@@ -4,6 +4,7 @@ import { AlarmProvider } from './contexts/alarms-context';
 import { ConfigProvider } from './contexts/config-context';
 import { ThemeProvider } from './contexts/theme-context';
 import { setupNotifications } from './utils/notifications';
+import ToastManager from 'toastify-react-native';
 
 export default () => {
   useEffect(() => {
@@ -15,6 +16,7 @@ export default () => {
       <ThemeProvider>
         <AlarmProvider>
           <MainNavigator />
+          <ToastManager />
         </AlarmProvider>
       </ThemeProvider>
     </ConfigProvider>

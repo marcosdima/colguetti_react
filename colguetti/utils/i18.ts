@@ -62,6 +62,19 @@ export const translations = {
       save: 'Save',
       clear: 'Clear',
     },
+    errors: {
+      requiredFields: {
+        title: 'Title is required',
+        duration: 'Duration is required',
+      },
+      invalidFields: {
+        duration: 'Duration must be a valid number',
+        list: {
+          unique: 'List items must be unique',
+          valid: 'Invalid item',
+        },
+      }
+    }
   },
   es: {
     home: {
@@ -126,5 +139,18 @@ export const translations = {
       save: 'Guardar',
       clear: 'Borrar',
     },
+    errors: {
+      requiredFields: {
+        title: 'El título es obligatorio',
+        duration: 'La duración es obligatoria',
+      },
+      invalidFields: {
+        duration: 'La duración debe ser un número válido',
+        list: {
+          unique: 'Los ítems de la lista deben ser únicos',
+          valid: 'Ítem inválido',
+        },
+      }
+    }
   },
 };
