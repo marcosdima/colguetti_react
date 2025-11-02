@@ -14,7 +14,12 @@ export default () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          animation: 'slide_from_right',
+          animationDuration: 300,
+        }}
+      >
         <Stack.Screen
           name="Home"
           component={Home}

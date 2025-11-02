@@ -12,7 +12,12 @@ export default () => {
   const texts = translations[configHook.config.language];
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+          animation: 'slide_from_bottom',
+          animationDuration: 300,
+        }}
+    >
       <Stack.Screen
         name="DisplayAlarms"
         component={Alarms}
