@@ -1,3 +1,5 @@
+import { success } from "./toast";
+
 export const translations = {
   en: {
     home: {
@@ -36,6 +38,11 @@ export const translations = {
             label: 'Items list',
             placeholder: 'Ex: Keys',
           },
+        },
+        success: {
+          created: 'Alarm created successfully!',
+          updated: 'Alarm updated successfully!',
+          title: 'Success',
         },
       },
       edit: {
@@ -113,6 +120,11 @@ export const translations = {
             label: 'Lista',
             placeholder: 'Ej: Llaves',
           },
+        },
+        success: {
+          created: 'Alarma creada exitosamente!',
+          updated: 'Alarma actualizada exitosamente!',
+          title: 'Éxito',
         },
       },
       edit: {

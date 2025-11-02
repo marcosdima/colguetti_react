@@ -12,7 +12,7 @@ import Text from '../../../components/base/Text';
 import GoUp from '../../animations/GoUp';
 import Chips from '../../inputs/Chips';
 import TextInput from '../../inputs/TextInput';
-import { error } from '../../../utils/toast';
+import { error, success } from '../../../utils/toast';
 
 export default () => {
   const { theme } = useTheme();
@@ -72,7 +72,10 @@ export default () => {
       list: items,
     };
 
-    if (alarm) updateAlarm({ ...data, id: alarm.id });
+    if (alarm) {
+      updateAlarm({ ...data, id: alarm.id });
+      success(texts.alarms.create.success.title, texts.alarms.create.success.updated, 2000);
+    }
     else {
       addAlarm(data)
 
@@ -80,6 +83,8 @@ export default () => {
       setTitle('');
       setDuration('');
       setItems([]);
+
+      success(texts.alarms.create.success.title, texts.alarms.create.success.created, 2000);
     };
   };
 
