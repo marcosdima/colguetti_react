@@ -19,7 +19,7 @@ type AlarmsScreenNavigationProp = NativeStackNavigationProp<AlarmStackParamList,
 
 export default ({ item }: AlarmDisplayProps) => {
   const { theme } = useTheme();
-  const { removeAlarm, activateAlarm } = useAlarms();
+  const { removeAlarm, activateAlarm, stopAlarm, activeAlarm } = useAlarms();
   const { navigate } = useNavigation<AlarmsScreenNavigationProp>();
 
   const { config: { language } } = useConfig();
@@ -54,6 +54,7 @@ export default ({ item }: AlarmDisplayProps) => {
         },
       ]
     );
+    if (activeAlarm?.alarmId === alarmId) stopAlarm();
   };
 
   return (
