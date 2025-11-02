@@ -24,9 +24,11 @@ export default ({
   // Register previous children count to animate only new children.
   const prevChildrenCount = useRef(0);
   
-  // Create animated values for each child.
   const animatedValues = useMemo(() => 
-    childArray.map(() => new Animated.Value(0)),
+    childArray.map((_, index) => {
+      // Only new items start at 0
+      return new Animated.Value(index >= prevChildrenCount.current ? 0 : 1);
+    }),
     [childArray.length]
   );
 
@@ -47,8 +49,12 @@ export default ({
     // Update previous children count.
     prevChildrenCount.current = childArray.length;
 
-    // Start staggered animations.
-    Animated.stagger(delay, animations).start();
+    // Start staggered animations if there are more than 1.
+    if (animations.length > 1) {
+      Animated.stagger(delay, animations).start();
+    } else {
+      animations.forEach((anim) => anim.start());
+    }
   }, [animatedValues, delay, tension, friction]);
 
   // Trigger pop animation on children change.
