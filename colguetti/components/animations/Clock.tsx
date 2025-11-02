@@ -31,10 +31,10 @@ export default ({ initialSeconds }: ClockProps) => {
   
   return (
     <View style={styles.row}>
-      <NumberPass number={m1} numberUp={m1 % 10} />
-      <NumberPass number={m2} numberUp={m2 % 10} />
+      <NumberPass number={m1} numberUp={m1 === 9 ? 0 : (m1 + 1)} />
+      <NumberPass number={m2} numberUp={m2 === 9 ? 0 : (m2 + 1)} />
       <Text>:</Text>
-      <NumberPass number={s1} numberUp={s1 % 10} />
+      <NumberPass number={s1} numberUp={s1 === 9 ? 0 : (s1 + 1)} />
       <NumberPass number={s2} numberUp={s2 === 9 ? 0 : (s2 + 1)} />
     </View>
   );
