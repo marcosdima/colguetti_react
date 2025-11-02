@@ -11,6 +11,7 @@ import Chips from '../../inputs/Chips';
 import { useRoute } from '@react-navigation/native';
 import { CreateRouteProp } from '../../../types/root-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import GoUp from '../../animations/GoUp';
 
 export default () => {
   const { theme } = useTheme();
@@ -63,7 +64,7 @@ export default () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-      <View style={styles.fields}>
+      <GoUp style={styles.fields}>
         <View>
           <Text style={styles.label}>{fields.title.label}</Text>
           <TextInput
@@ -91,7 +92,7 @@ export default () => {
           />
           <Chips items={items} onRemove={removeItem}/>
         </View>
-      </View>
+      </GoUp>
       <Button
         text={texts.actions.save}
         onPress={handleAdd}
